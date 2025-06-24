@@ -8,32 +8,50 @@ import {
 } from "react-icons/fa";
 import type { IconType } from "react-icons/lib";
 import { IoSettingsSharp } from "react-icons/io5";
+import { NavLink } from "react-router-dom";
 
 type MenuItemProps = {
   icon: IconType;
   text: string;
   className?: string;
+  link?: string;
 };
 
-const MenuItem = ({ icon: Icon, text, className = "" }: MenuItemProps) => (
+const MenuItem = ({
+  icon: Icon,
+  text,
+  className = "",
+  link = "/",
+}: MenuItemProps) => (
   <li>
-    <button
-      className={`flex items-center p-2 hover:text-primary hover:bg-accent rounded-[12px] cursor-pointer gap-2 w-full text-left transition duration-200 ${className}`}
+    <NavLink
+      to={link}
+      className={({ isActive }) =>
+        `
+        flex items-center p-2 gap-2 w-full text-left transition duration-200 rounded-[12px]
+        ${
+          isActive
+            ? "bg-accent text-primary"
+            : "hover:bg-accent hover:text-primary"
+        }
+        ${className}
+        `
+      }
     >
       <Icon />
       {text}
-    </button>
+    </NavLink>
   </li>
 );
 
 const Sidebar = () => {
   const menuItems = [
-    { icon: AiFillLayout, text: "Tableau de bord" },
-    { icon: FaDumbbell, text: "Mes entrainements" },
-    { icon: FaCalendarAlt, text: "Programmes" },
-    { icon: FaRunning, text: "Exercices" },
-    { icon: FaChartBar, text: "Statistiques" },
-    { icon: FaUser, text: "Profil" },
+    { icon: AiFillLayout, text: "Tableau de bord", link: "/" },
+    { icon: FaDumbbell, text: "Mes entrainements", link: "/trainings" },
+    { icon: FaCalendarAlt, text: "Programmes", link: "/programs" },
+    { icon: FaRunning, text: "Exercices", link: "/exercises" },
+    { icon: FaChartBar, text: "Statistiques", link: "/statistics" },
+    { icon: FaUser, text: "Profil", link: "/profile" },
   ];
 
   return (
@@ -47,7 +65,12 @@ const Sidebar = () => {
       <div className="flex flex-col justify-between h-full mx-auto mt-20">
         <ul className="flex flex-col gap-6">
           {menuItems.map((item, index) => (
-            <MenuItem key={index} icon={item.icon} text={item.text} />
+            <MenuItem
+              key={index}
+              icon={item.icon}
+              text={item.text}
+              link={item.link}
+            />
           ))}
         </ul>
         <ul>
@@ -55,6 +78,7 @@ const Sidebar = () => {
             icon={IoSettingsSharp}
             text="Paramètres"
             className="mb-10"
+            link="/settings"
           />
         </ul>
       </div>
