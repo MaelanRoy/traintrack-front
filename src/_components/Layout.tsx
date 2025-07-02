@@ -1,19 +1,24 @@
 // src/components/Layout.tsx
 import Sidebar from "./Sidebar";
-import Navbar from "./Navbar";
 import { Outlet } from "react-router-dom";
+import { AxiosInterceptor } from "@/config/api/AxiosInterceptor";
+import Navbar from "./Navbar";
 
 const Layout = () => {
   return (
-    <div className="">
-      <Sidebar></Sidebar>
-      <div className=" ml-[222px] ">
-        <Navbar></Navbar>
-        <div className="p-4">
-          <Outlet />
+    <>
+      <AxiosInterceptor>
+        <div className="">
+          <Sidebar></Sidebar>
+          <div className=" ml-[222px] ">
+            <Navbar></Navbar>
+            <div className="p-4">
+              <Outlet />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      </AxiosInterceptor>
+    </>
   );
 };
 

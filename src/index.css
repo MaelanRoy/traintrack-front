@@ -4,7 +4,9 @@
 @theme {
   --color-primary: #141514;
   --color-secondary: #0a0a0a;
+  --color-secondary-hover: #202020;
   --color-accent: #b3ff58;
+  --color-accent-hover: #a0e04c;
 
   --font-family-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
 }

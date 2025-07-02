@@ -9,6 +9,8 @@ import ProgramsPage from "./pages/ProgramsPage/ProgramsPage";
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/config/api/QueryClient.ts";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +38,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />;
+    </QueryClientProvider>
+  );
 }
 
 export default App;
