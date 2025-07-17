@@ -1,7 +1,7 @@
 import { type JwtPayload, jwtDecode } from "jwt-decode";
 
 interface MyJwtPayload extends JwtPayload {
-  profile: string;
+  role: string;
 }
 
 export const decodeJwt = (token: string): MyJwtPayload => {
@@ -19,13 +19,16 @@ export const isAuthenticated = (): boolean => {
 };
 
 /**
- * Checks if the profile associated with the current JWT token is that of an administrator.
+ * Checks if the role associated with the current JWT token is that of an administrator.
  *
- * @returns {boolean} true if the profile is "Administrator", otherwise false.
+ * @returns {boolean} true if the role is "Administrator", otherwise false.
  */
 export const isAdministratorProfile = (): boolean => {
+  if (!isAuthenticated()) {
+    return false;
+  }
   const decodedJwt = decodeJwt(localStorage.getItem("token")!);
-  return decodedJwt.profile === "ADMINISTRATOR";
+  return decodedJwt.role === "ADMINISTRATOR";
 };
 
 /**
@@ -34,6 +37,9 @@ export const isAdministratorProfile = (): boolean => {
  * @returns {boolean} true if the profile is "Normal", otherwise false.
  */
 export const isNormalProfil = (): boolean => {
+  if (!isAuthenticated()) {
+    return false;
+  }
   const decodedJwt = decodeJwt(localStorage.getItem("token")!);
-  return decodedJwt.profile === "NORMAL";
+  return decodedJwt.role === "NORMAL";
 };

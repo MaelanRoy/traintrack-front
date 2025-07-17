@@ -6,9 +6,11 @@ import {
   FaRunning,
   FaUser,
 } from "react-icons/fa";
+import { MdAdminPanelSettings } from "react-icons/md";
 import type { IconType } from "react-icons/lib";
 import { IoSettingsSharp } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "@/hooks/useAuth";
 
 type MenuItemProps = {
   icon: IconType;
@@ -45,6 +47,8 @@ const MenuItem = ({
 );
 
 const Sidebar = () => {
+  const { isAdmin } = useAuth();
+
   const menuItems = [
     { icon: AiFillLayout, text: "Tableau de bord", link: "/" },
     { icon: FaDumbbell, text: "Mes entrainements", link: "/trainings" },
@@ -53,6 +57,19 @@ const Sidebar = () => {
     { icon: FaChartBar, text: "Statistiques", link: "/statistics" },
     { icon: FaUser, text: "Profil", link: "/profile" },
   ];
+
+  // Ajouter le menu Administration seulement si l'utilisateur est admin
+  const adminMenuItems = isAdmin
+    ? [
+        {
+          icon: MdAdminPanelSettings,
+          text: "Administration",
+          link: "/administration",
+        },
+      ]
+    : [];
+
+  const allMenuItems = [...menuItems, ...adminMenuItems];
 
   return (
     <nav className="fixed flex flex-col w-[222px] top-0 left-0 h-screen bg-primary">
@@ -64,7 +81,7 @@ const Sidebar = () => {
       </div>
       <div className="flex flex-col justify-between h-full mx-auto mt-20">
         <ul className="flex flex-col gap-6">
-          {menuItems.map((item, index) => (
+          {allMenuItems.map((item, index) => (
             <MenuItem
               key={index}
               icon={item.icon}

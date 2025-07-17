@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AxiosResponse, AxiosError } from "axios";
 import AuthenticationService from "@/services/AuthenticationService";
 import type LoginRequest from "@/models/LoginRequest";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LoginResponse {
   token: string;
@@ -15,6 +16,7 @@ interface UseLoginOptions {
 
 export const useLogin = (options?: UseLoginOptions) => {
   const queryClient = useQueryClient();
+  const { login } = useAuth();
 
   return useMutation<AxiosResponse<LoginResponse>, AxiosError, LoginRequest>({
     mutationFn: (loginData) =>
@@ -23,7 +25,7 @@ export const useLogin = (options?: UseLoginOptions) => {
       queryClient.invalidateQueries({ queryKey: ["login"] });
       queryClient.invalidateQueries({ queryKey: ["user"] });
       const { token, type } = response.data;
-      localStorage.setItem("token", `${type} ${token}`);
+      login(`${type} ${token}`);
       options?.onSuccess?.(response);
     },
     onError: (error) => {

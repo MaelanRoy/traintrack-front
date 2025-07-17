@@ -11,6 +11,9 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/config/api/QueryClient.ts";
+import { AuthProvider } from "@/contexts/AuthContext";
+import AdministrationPage from "./pages/Administration/AdministrationPage";
+import ProtectedRoute from "./router/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +35,14 @@ const router = createBrowserRouter([
       },
       { path: "statistics", element: <StatisticsPage /> },
       { path: "profile", element: <ProfilePage /> },
+      {
+        path: "administration",
+        element: (
+          <ProtectedRoute requireAdmin={true}>
+            <AdministrationPage />
+          </ProtectedRoute>
+        ),
+      },
       { path: "settings", element: <SettingsPage /> },
     ],
   },
@@ -40,7 +51,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />;
+      <AuthProvider>
+        <RouterProvider router={router} />;
+      </AuthProvider>
     </QueryClientProvider>
   );
 }
