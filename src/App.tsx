@@ -14,6 +14,7 @@ import { queryClient } from "@/config/api/QueryClient.ts";
 import { AuthProvider } from "@/contexts/AuthContext";
 import AdministrationPage from "./pages/Administration/AdministrationPage";
 import ProtectedRoute from "./router/ProtectedRoute";
+import ExerciseCreationPage from "./pages/Administration/Exercise/Create/ExerciseCreationPage";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,14 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute requireAdmin={true}>
             <AdministrationPage />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "administration/exercise/create",
+        element: (
+          <ProtectedRoute requireAdmin={true}>
+            <ExerciseCreationPage />
           </ProtectedRoute>
         ),
       },

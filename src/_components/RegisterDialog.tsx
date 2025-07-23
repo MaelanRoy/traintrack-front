@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import FormField from "./FormField";
+import FormInput from "./FormInput";
 import { useRegister } from "@/hooks/useRegister";
 import type { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
@@ -72,10 +72,11 @@ export const RegisterDialog = ({ trigger }: RegisterDialogProps) => {
   } = useRegister();
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset: resetForm,
+    watch,
   } = useForm<RegisterFormData>({
     resolver: yupResolver(registerSchema),
   });
@@ -162,33 +163,82 @@ export const RegisterDialog = ({ trigger }: RegisterDialogProps) => {
             </div>
           )}
 
-          <FormField
-            type="text"
+          <FormInput
+            type="input"
             name="username"
             placeholder="Nom d'utilisateur"
-            register={register}
-            error={errors.username}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "Le nom d'utilisateur est requis",
+              minLength: {
+                value: 3,
+                message:
+                  "Le nom d'utilisateur doit comporter au moins 3 caractères",
+              },
+              maxLength: {
+                value: 30,
+                message:
+                  "Le nom d'utilisateur ne doit pas dépasser 30 caractères",
+              },
+            }}
           />
-          <FormField
+          <FormInput
             type="email"
             name="email"
             placeholder="Email"
-            register={register}
-            error={errors.email}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "L'email est requis",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Adresse e-mail invalide",
+              },
+              maxLength: {
+                value: 100,
+                message: "L'email ne doit pas dépasser 100 caractères",
+              },
+            }}
           />
-          <FormField
+          <FormInput
             type="password"
             name="password"
             placeholder="Mot de passe"
-            register={register}
-            error={errors.password}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "Le mot de passe est requis",
+              minLength: {
+                value: 8,
+                message: "Le mot de passe doit comporter au moins 8 caractères",
+              },
+              maxLength: {
+                value: 100,
+                message: "Le mot de passe ne doit pas dépasser 100 caractères",
+              },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9]).{8,}$/,
+                message:
+                  "Le mot de passe doit contenir au moins une majuscule, une minuscule et un caractère spécial",
+              },
+            }}
           />
-          <FormField
+          <FormInput
             type="password"
             name="confirmPassword"
             placeholder="Confirmer le mot de passe"
-            register={register}
-            error={errors.confirmPassword}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "La confirmation du mot de passe est requise",
+              validate: (value: string) => {
+                const password = watch("password");
+                return (
+                  value === password || "Les mots de passe ne correspondent pas"
+                );
+              },
+            }}
           />
           <DialogFooter>
             <DialogClose asChild>

@@ -12,7 +12,7 @@ const Layout = () => {
           <Sidebar></Sidebar>
           <div className=" ml-[222px] ">
             <Navbar></Navbar>
-            <div className="p-4">
+            <div className="p-5">
               <Outlet />
             </div>
           </div>

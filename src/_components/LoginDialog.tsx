@@ -13,7 +13,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import FormField from "./FormField";
+import FormInput from "./FormInput";
 import { useLogin } from "@/hooks/useLogin";
 import type LoginRequest from "@/models/LoginRequest";
 import { useNavigate } from "react-router-dom";
@@ -48,7 +48,7 @@ export const LoginDialog = ({ trigger }: LoginDialogProps) => {
   } = useLogin();
 
   const {
-    register,
+    control,
     handleSubmit,
     formState: { errors },
     reset: resetForm,
@@ -107,19 +107,29 @@ export const LoginDialog = ({ trigger }: LoginDialogProps) => {
               {errorMessage}
             </div>
           )}
-          <FormField
+          <FormInput
             type="email"
             name="email"
             placeholder="Email"
-            register={register}
-            error={errors.email}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "L'email est requis",
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: "Adresse e-mail invalide",
+              },
+            }}
           />
-          <FormField
+          <FormInput
             type="password"
             name="password"
             placeholder="Mot de passe"
-            register={register}
-            error={errors.password}
+            control={control}
+            errors={errors}
+            rules={{
+              required: "Le mot de passe est requis",
+            }}
           />
           <DialogFooter>
             <DialogClose asChild>
