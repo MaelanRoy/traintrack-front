@@ -15,6 +15,7 @@ import { AuthProvider } from "@/contexts/AuthContext";
 import AdministrationPage from "./pages/Administration/AdministrationPage";
 import ProtectedRoute from "./router/ProtectedRoute";
 import ExerciseCreationPage from "./pages/Administration/Exercise/Create/ExerciseCreationPage";
+import ExerciseDetailsPage from "./pages/ExercicesPage/ExerciseDetailsPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "exercises",
         element: <ExercicesPage />,
+      },
+      {
+        path: "exercises/:id",
+        element: <ExerciseDetailsPage />,
       },
       { path: "statistics", element: <StatisticsPage /> },
       { path: "profile", element: <ProfilePage /> },

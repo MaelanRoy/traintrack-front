@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import "tailwindcss";
+@import "tw-animate-css";
 
 @theme {
   --color-primary: #141514;
@@ -20,4 +21,9 @@ body {
   font-family: "Poppins", ui-sans-serif, system-ui, sans-serif;
   color: white;
   background-color: var(--color-secondary);
+}
+
+/* Animations complètes pour DropdownMenu */
+[data-radix-popper-content-wrapper] {
+  z-index: 50;
 }

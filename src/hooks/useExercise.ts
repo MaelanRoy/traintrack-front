@@ -18,6 +18,16 @@ export const useExercisesList = () => {
   });
 };
 
+export const useRandomExercisesFromAllCategories = (
+  limitPerCategory: number = 5
+) => {
+  return useQuery<Exercise[], Error>({
+    queryKey: ["exercises", "random-by-categories", limitPerCategory],
+    queryFn: (): Promise<Exercise[]> =>
+      ExerciseService.findRandomExercisesFromAllCategories(limitPerCategory),
+  });
+};
+
 export const useCreateExercise = () => {
   return useMutation<Exercise, Error, Exercise>({
     mutationFn: (exercise: Exercise): Promise<Exercise> =>

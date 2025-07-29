@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useExerciseZoneList = () => {
   return useQuery<ExerciseZone[], Error>({
-    queryKey: ["categories"],
+    queryKey: ["exercise-zones"],
     queryFn: (): Promise<ExerciseZone[]> => ExerciseZoneService.findAll(),
   });
 };

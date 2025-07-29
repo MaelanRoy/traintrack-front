@@ -22,6 +22,20 @@ class ExerciseService {
   }
 
   /**
+   * Returns random exercises from all categories
+   * @param limitPerCategory the number of exercises per category (default: 4)
+   * @return promise @type { Promise<Exercise[]> }
+   */
+  async findRandomExercisesFromAllCategories(
+    limitPerCategory: number = 4
+  ): Promise<Exercise[]> {
+    const { data } = await api.get(
+      `/exercises/random-by-categories/${limitPerCategory}`
+    );
+    return data;
+  }
+
+  /**
    * Deletes exercise with a specific id
    * @param id the id to delete
    * @return promise @type { Promise<void> }

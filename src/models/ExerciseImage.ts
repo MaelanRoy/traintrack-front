@@ -1,7 +1,7 @@
 export default interface ExerciseImage {
   id?: number;
   name: string;
-  image: string;
+  imageData: string;
   imageType: string;
   exerciseId: number;
   position: number;

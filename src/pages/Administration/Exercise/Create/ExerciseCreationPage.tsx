@@ -22,6 +22,8 @@ const ExerciseCreationPage = () => {
     data: exerciseCategoriesData,
   } = useCategoryList();
 
+  console.log("categories", exerciseCategoriesData);
+
   const { mutateAsync: createExercise } = useCreateExercise();
   const { mutateAsync: createExerciseImage } = useCreateExerciseImage();
 
@@ -38,6 +40,7 @@ const ExerciseCreationPage = () => {
       defaultEquipmentWeight: values.defaultEquipmentWeight,
       zones: values.zones,
     };
+    console.log("Exercice à créer :", exercice);
 
     const createExerciseResponse = await createExercise(exercice);
 

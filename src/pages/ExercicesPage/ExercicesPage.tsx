@@ -1,10 +1,29 @@
+import ExerciseList from "@/_components/ExerciseList/ExerciseList";
+import { useRandomExercisesFromAllCategories } from "@/hooks/useExercise";
+import { useGroupedExercises } from "@/hooks/useGroupedExercises";
+
 const ExercicesPage = () => {
+  const {
+    isLoading: isLoadingRandomExercises,
+    isError: isErrorRandomExercises,
+    isSuccess: isSuccessRandomExercises,
+    data: randomExercisesData,
+  } = useRandomExercisesFromAllCategories();
+
+  // Utiliser le hook personnalisé pour grouper les exercices
+  const exercisesByCategory = useGroupedExercises(randomExercisesData);
+
+  console.log("Random Exercises Data:", randomExercisesData);
+  console.log("Exercises by Category:", exercisesByCategory);
+
   return (
-    <div className="exercices-page">
-      <h1>Exercices</h1>
-      <p>Welcome to the Exercices page!</p>
-      {/* Add more content or components related to Exercices here */}
-    </div>
+    <>
+      {isLoadingRandomExercises && "loading..."}
+      {isErrorRandomExercises && "error loading exercise zones"}
+      {isSuccessRandomExercises && exercisesByCategory && (
+        <ExerciseList exercisesByCategory={exercisesByCategory} />
+      )}
+    </>
   );
 };
 export default ExercicesPage;

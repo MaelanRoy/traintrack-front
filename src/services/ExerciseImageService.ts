@@ -40,7 +40,7 @@ class ExerciseImageService {
     exerciseId: number
   ): Promise<ExerciseImage> {
     const formData: FormData = new FormData();
-    formData.append("ExerciseImage", exerciseImage);
+    formData.append("exerciseImage", exerciseImage);
     formData.append("exerciseId", exerciseId.toString());
     return api.put(`/exercise-images/${id}`, formData);
   }
